@@ -3,6 +3,7 @@
 import { useRouter } from 'next/navigation'
 import { ArrowLeft, Search, Settings } from 'lucide-react'
 import { cn } from '@/lib/utils/cn'
+import { LanguageSwitcher } from '@/components/ui'
 
 interface HeaderProps {
   title?: string
@@ -10,6 +11,7 @@ interface HeaderProps {
   showBack?: boolean
   showSearch?: boolean
   showSettings?: boolean
+  showLanguage?: boolean
   onSearchClick?: () => void
   onSettingsClick?: () => void
   className?: string
@@ -21,6 +23,7 @@ export function Header({
   showBack = false,
   showSearch = false,
   showSettings = false,
+  showLanguage = false,
   onSearchClick,
   onSettingsClick,
   className,
@@ -54,6 +57,7 @@ export function Header({
       </div>
 
       <div className="flex items-center gap-1">
+        {showLanguage && <LanguageSwitcher variant="toggle" />}
         {showSearch && (
           <button
             onClick={onSearchClick}

@@ -6,11 +6,11 @@ import { motion } from 'framer-motion'
 import { Input, Badge } from '@/components/ui'
 import { PageTransition, Header } from '@/components/layout'
 import { VenueCard, ArtworkCard } from '@/components/discover'
+import { useTranslations } from '@/lib/i18n'
 import {
   MOCK_VENUES,
   MOCK_ARTWORKS,
   getUniqueCities,
-  getVenuesByCity,
   VENUE_TYPE_CONFIG,
 } from '@/lib/data/mockData'
 import type { VenueType } from '@/types'
@@ -29,6 +29,7 @@ const stagger = {
 }
 
 export default function DiscoverPage() {
+  const t = useTranslations()
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedCity, setSelectedCity] = useState<string | null>(null)
   const [selectedType, setSelectedType] = useState<VenueType | null>(null)
@@ -59,14 +60,14 @@ export default function DiscoverPage() {
 
   return (
     <PageTransition variant="fade">
-      <Header title="Discover" showSearch={false} />
+      <Header title={t.discover.title} showSearch={false} showLanguage />
 
       <div className="px-4 pb-24">
         {/* Search */}
         <div className="mb-6">
           <Input
             type="search"
-            placeholder="Search venues, cities, or countries..."
+            placeholder={t.discover.searchPlaceholder}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             leftIcon={<Search className="w-5 h-5" />}
@@ -84,7 +85,7 @@ export default function DiscoverPage() {
                   : 'bg-background-secondary text-foreground-secondary hover:bg-primary-100'
               }`}
             >
-              All Cities
+              {t.discover.filters.allCities}
             </button>
             {cities.map(city => (
               <button
@@ -113,7 +114,7 @@ export default function DiscoverPage() {
                   : 'bg-background-secondary text-foreground-secondary hover:bg-accent-100'
               }`}
             >
-              All Types
+              {t.discover.filters.allTypes}
             </button>
             {(Object.keys(VENUE_TYPE_CONFIG) as VenueType[]).map(type => (
               <button
@@ -125,7 +126,7 @@ export default function DiscoverPage() {
                     : `${VENUE_TYPE_CONFIG[type].bgColor} ${VENUE_TYPE_CONFIG[type].color} hover:opacity-80`
                 }`}
               >
-                {VENUE_TYPE_CONFIG[type].label}
+                {t.discover.types[type as keyof typeof t.discover.types] || VENUE_TYPE_CONFIG[type].label}
               </button>
             ))}
           </div>
@@ -141,7 +142,7 @@ export default function DiscoverPage() {
           >
             <motion.div variants={fadeInUp} className="flex items-center gap-2 mb-4">
               <Sparkles className="w-5 h-5 text-primary-500" />
-              <h2 className="text-lg font-semibold font-serif text-foreground">Featured</h2>
+              <h2 className="text-lg font-semibold font-serif text-foreground">{t.discover.featured}</h2>
             </motion.div>
 
             <div className="grid grid-cols-2 gap-4">
@@ -164,7 +165,7 @@ export default function DiscoverPage() {
           >
             <motion.div variants={fadeInUp} className="flex items-center gap-2 mb-4">
               <TrendingUp className="w-5 h-5 text-accent-600" />
-              <h2 className="text-lg font-semibold font-serif text-foreground">Famous Artworks</h2>
+              <h2 className="text-lg font-semibold font-serif text-foreground">{t.discover.famousArtworks}</h2>
             </motion.div>
 
             <div className="flex gap-4 overflow-x-auto pb-4 -mx-4 px-4 scrollbar-hide">
@@ -190,7 +191,7 @@ export default function DiscoverPage() {
           <motion.div variants={fadeInUp} className="flex items-center gap-2 mb-4">
             <Globe className="w-5 h-5 text-foreground-muted" />
             <h2 className="text-lg font-semibold font-serif text-foreground">
-              {searchQuery || selectedCity || selectedType ? 'Results' : 'Explore All Venues'}
+              {searchQuery || selectedCity || selectedType ? t.discover.results : t.discover.exploreAll}
             </h2>
             <Badge variant="default" size="sm">{filteredVenues.length}</Badge>
           </motion.div>
@@ -201,7 +202,7 @@ export default function DiscoverPage() {
               className="text-center py-12"
             >
               <MapPin className="w-12 h-12 text-foreground-muted mx-auto mb-4" />
-              <p className="text-foreground-muted">No venues found matching your criteria</p>
+              <p className="text-foreground-muted">{t.discover.noResults}</p>
             </motion.div>
           ) : (
             <div className="grid gap-4">
@@ -225,15 +226,15 @@ export default function DiscoverPage() {
             <div className="grid grid-cols-3 gap-4 text-center">
               <div>
                 <p className="text-2xl font-bold font-serif text-primary-600">{MOCK_VENUES.length}</p>
-                <p className="text-xs text-foreground-muted">Venues</p>
+                <p className="text-xs text-foreground-muted">{t.discover.stats.venues}</p>
               </div>
               <div>
                 <p className="text-2xl font-bold font-serif text-accent-600">{MOCK_ARTWORKS.length}</p>
-                <p className="text-xs text-foreground-muted">Artworks</p>
+                <p className="text-xs text-foreground-muted">{t.discover.stats.artworks}</p>
               </div>
               <div>
                 <p className="text-2xl font-bold font-serif text-foreground-secondary">{cities.length}</p>
-                <p className="text-xs text-foreground-muted">Cities</p>
+                <p className="text-xs text-foreground-muted">{t.discover.stats.cities}</p>
               </div>
             </div>
           </motion.section>

@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next'
 import { Inter, Playfair_Display } from 'next/font/google'
 import { Toaster } from 'react-hot-toast'
 import { AuthProvider } from '@/components/providers'
+import { I18nProvider } from '@/lib/i18n'
 import './globals.css'
 
 const inter = Inter({
@@ -66,8 +67,9 @@ export default function RootLayout({
     <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
       <body className="font-sans antialiased">
         <AuthProvider>
-          {children}
-          <Toaster
+          <I18nProvider>
+            {children}
+            <Toaster
             position="top-center"
             toastOptions={{
               duration: 4000,
@@ -92,7 +94,8 @@ export default function RootLayout({
                 },
               },
             }}
-          />
+            />
+          </I18nProvider>
         </AuthProvider>
       </body>
     </html>

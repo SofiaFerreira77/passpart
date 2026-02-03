@@ -11,3 +11,4 @@ export {
   SkeletonText,
   type SkeletonProps,
 } from './Skeleton'
+export { LanguageSwitcher } from './LanguageSwitcher'
