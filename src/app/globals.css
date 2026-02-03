@@ -1,26 +1,212 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
+/* Passpart Theme - Tailwind CSS v4 */
+/* Note: Fonts loaded via next/font/google in layout.tsx */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Primary - Gold/Sepia tones */
+  --color-primary-50: #FDF8F3;
+  --color-primary-100: #F9EFE3;
+  --color-primary-200: #F2DCC4;
+  --color-primary-300: #E8C59E;
+  --color-primary-400: #D4A574;
+  --color-primary-500: #C4956A;
+  --color-primary-600: #A67B5B;
+  --color-primary-700: #8B6349;
+  --color-primary-800: #704E3A;
+  --color-primary-900: #5A3E2E;
+
+  /* Accent - Museum Green */
+  --color-accent-50: #F0F5F2;
+  --color-accent-100: #D9E8DE;
+  --color-accent-200: #B3D1BD;
+  --color-accent-300: #7FB394;
+  --color-accent-400: #4A6B52;
+  --color-accent-500: #3D5A47;
+  --color-accent-600: #2D4739;
+  --color-accent-700: #243A2E;
+  --color-accent-800: #1C2D24;
+  --color-accent-900: #15221B;
+
+  /* Background - Cream */
+  --color-background: #FAF8F5;
+  --color-background-secondary: #F5F2ED;
+  --color-background-tertiary: #EDE8E0;
+
+  /* Foreground - Dark Brown */
+  --color-foreground: #2C2416;
+  --color-foreground-secondary: #4A3F2F;
+  --color-foreground-muted: #7A6F5F;
+
+  /* Surface colors */
+  --color-surface: #FFFFFF;
+  --color-surface-elevated: #FFFFFF;
+
+  /* Semantic colors */
+  --color-success: #4A6B52;
+  --color-warning: #D4A574;
+  --color-error: #C77B8B;
+  --color-info: #6B8CAE;
+
+  /* Fonts */
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-serif: 'Playfair Display', Georgia, serif;
+
+  /* Border radius */
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+  --radius-2xl: 2rem;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgb(44 36 22 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(44 36 22 / 0.08), 0 2px 4px -2px rgb(44 36 22 / 0.05);
+  --shadow-lg: 0 10px 15px -3px rgb(44 36 22 / 0.08), 0 4px 6px -4px rgb(44 36 22 / 0.05);
+  --shadow-xl: 0 20px 25px -5px rgb(44 36 22 / 0.1), 0 8px 10px -6px rgb(44 36 22 / 0.05);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* CSS Variables for runtime access */
+:root {
+  --background: #FAF8F5;
+  --foreground: #2C2416;
+  --primary: #D4A574;
+  --accent: #2D4739;
+}
+
+/* Base styles */
+html {
+  scroll-behavior: smooth;
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  font-feature-settings: 'cv11', 'ss01';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Typography utilities */
+.font-serif {
+  font-family: var(--font-serif);
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-foreground-muted);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-foreground-secondary);
+}
+
+/* Selection styling */
+::selection {
+  background-color: var(--color-primary-200);
+  color: var(--color-foreground);
+}
+
+/* Focus visible styling */
+:focus-visible {
+  outline: 2px solid var(--color-primary-500);
+  outline-offset: 2px;
+}
+
+/* Safe area insets for iOS */
+.safe-area-inset-bottom {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.safe-area-inset-top {
+  padding-top: env(safe-area-inset-top);
+}
+
+/* Stamp texture effect */
+.stamp-texture {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  background-blend-mode: overlay;
+}
+
+/* Vintage paper effect */
+.paper-texture {
+  background-image:
+    linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0) 100%),
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.08'/%3E%3C/svg%3E");
+}
+
+/* Animation utilities */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 1.5s infinite;
+  background: linear-gradient(
+    90deg,
+    var(--color-background-secondary) 25%,
+    var(--color-background) 50%,
+    var(--color-background-secondary) 75%
+  );
+  background-size: 200% 100%;
+}
+
+@keyframes pulse-soft {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+.animate-pulse-soft {
+  animation: pulse-soft 2s ease-in-out infinite;
+}
+
+@keyframes bounce-in {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.animate-bounce-in {
+  animation: bounce-in 0.4s ease-out;
+}
+
+/* Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
